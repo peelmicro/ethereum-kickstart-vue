@@ -1,1 +1,1 @@
-"# ethereum-kickstart" 
+"# ethereum-kickstart-vue" 
