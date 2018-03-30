@@ -1,0 +1,19 @@
+{
+	"name": "kickstart",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "mocha"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"fs-extra": "^5.0.0",
+		"ganache-cli": "^6.1.0",
+		"mocha": "^5.0.4",
+		"solc": "^0.4.21",
+		"truffle-hdwallet-provider": "0.0.3",
+		"web3": "^1.0.0-beta.26"
+	}
+}
