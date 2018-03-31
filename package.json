@@ -1,12 +1,16 @@
 {
-	"name": "kickstart",
+	"name": "kickstart-vue",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Ethereum KickStart web site created with Vue (instead of React) From 'Ethereum and Solidity: The Complete Developer's Guide' Udemy course",
 	"main": "index.js",
 	"scripts": {
+		"dev": "nuxt",
+		"build": "nuxt build",
+		"start": "nuxt start",
+		"generate": "nuxt generate",
 		"test": "mocha"
 	},
-	"author": "",
+	"author": "Juan Pablo Perez <juanp_perez@msn.com>",
 	"license": "ISC",
 	"dependencies": {
 		"fs-extra": "^5.0.0",
@@ -14,6 +18,27 @@
 		"mocha": "^5.0.4",
 		"solc": "^0.4.21",
 		"truffle-hdwallet-provider": "0.0.3",
-		"web3": "^1.0.0-beta.26"
+		"web3": "^1.0.0-beta.26",
+		"nuxt": "^1.4.0",
+		"vuetify": "^1.0.11"
+	},
+	"devDependencies": {
+		"babel-eslint": "^7.2.3",
+		"eslint": "^4.3.0",
+		"eslint-config-standard": "^10.2.1",
+		"eslint-loader": "^1.9.0",
+		"eslint-plugin-html": "^3.1.1",
+		"eslint-plugin-import": "^2.7.0",
+		"eslint-plugin-node": "^5.1.1",
+		"eslint-plugin-promise": "^3.5.0",
+		"eslint-plugin-standard": "^3.0.1",
+		"stylus": "^0.54.5",
+		"stylus-loader": "^3.0.2"
+	},
+	"config": {
+		"nuxt": {
+			"host": "0.0.0.0",
+			"port": "3333"
+		}
 	}
 }
