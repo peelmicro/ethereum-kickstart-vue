@@ -3,18 +3,23 @@
     <v-navigation-drawer app></v-navigation-drawer>
     <v-toolbar app>
       <v-toolbar-title>
-        Im the header
+        Crowd Coin
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+       <v-toolbar-items>
+        <v-btn>
+          Campaigns
+        </v-btn>
+        <v-btn>
+          <v-icon left>add_circle</v-icon>
+          Add
+        </v-btn>        
+      </v-toolbar-items>     
     </v-toolbar>
     <v-content>
       <v-container fluid>
         <router-view></router-view>
       </v-container>
     </v-content>
-    <v-footer app>
-      <v-layout row>
-        <v-flex xs12>Im the footer</v-flex>
-      </v-layout>
-    </v-footer>
   </v-app>
 </template>

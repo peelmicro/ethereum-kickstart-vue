@@ -2,17 +2,16 @@
   <v-container>
     <v-layout row>
       <v-flex xs12>
-        Open Campaigns
+        <h3>Open Campaigns</h3>
       </v-flex>
     </v-layout>
-    <v-layout 
-      row 
-      wrap
-      v-for="campaign in campaigns"
-      :key="campaign.id"     
-      class="mb-2" 
+    <v-layout row>
+      <v-flex xs12 md9
+        v-for="campaign in campaigns"
+        :key="campaign.id"     
+        class="mb-2"
+        wrap
       >
-      <v-flex xs12 md8>
         <v-card class="info">
             <v-layout row>
               <v-flex xs12>
@@ -30,6 +29,12 @@
               </v-flex>              
             </v-layout>
         </v-card>
+      </v-flex>
+      <v-flex xs12 md3>
+        <v-btn>
+          <v-icon left>add_circle</v-icon>
+          Create Campaing
+        </v-btn>         
       </v-flex>
     </v-layout>
   </v-container>
