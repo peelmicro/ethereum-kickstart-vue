@@ -78,6 +78,7 @@ export default {
           .send({
             from: accounts[0] // First Account
           })
+        this.$router.push('/')
       } catch (err) {
         this.errorMessage = err.message.split('\n', 1).join('')
         this.error = true
