@@ -45,15 +45,10 @@
 </template>
 
 <script>
-import factory from '../../ethereum/factory'
-import web3 from '../../ethereum/web3'
 export default {
   data () {
     return {
-      minimumContribution: '',
-      errorMessage: '',
-      loading: false,
-      error: false
+      minimumContribution: ''
     }
   },
   computed: {
@@ -61,6 +56,15 @@ export default {
       return (
         this.minimumContribution !== ''
       )
+    },
+    errorMessage () {
+      return this.$store.getters.errorMessage
+    },
+    loading () {
+      return this.$store.getters.loading
+    },
+    error () {
+      return this.$store.getters.error
     }
   },
   methods: {
@@ -68,23 +72,17 @@ export default {
       if (!this.formIsValid) {
         return
       }
-      this.errorMessage = ''
-      this.error = false
-      this.loading = true
-      try {
-        const accounts = await web3.eth.getAccounts() // From Metamask
-        await factory.methods
-          .createCampaign(this.minimumContribution)
-          .send({
-            from: accounts[0] // First Account
-          })
+      await this.$store.dispatch('createCampaign', {
+        minimumContribution: this.minimumContribution
+      })
+      if (!this.error) {
         this.$router.push('/')
-      } catch (err) {
-        this.errorMessage = err.message.split('\n', 1).join('')
-        this.error = true
       }
-      this.loading = false
     }
+  },
+  mounted () {
+    this.$store.commit('setError', false)
+    this.$store.commit('setErrorMessage', '')
   }
 }
 </script>

@@ -10,7 +10,7 @@
         <v-layout 
           row
           v-for="campaign in campaigns"
-          :key="campaign.id"     
+          :key="campaign.address"     
           class="mb-2"      
         >
           <v-flex xs12>
@@ -19,11 +19,11 @@
                   <v-flex xs12>
                     <v-card-title primary-title>
                       <div>
-                        <h5>{{campaign.id}}</h5>
+                        <h5>{{campaign.address}}</h5>
                       </div>
                     </v-card-title>
                     <v-card-actions>
-                      <v-btn class="info" :to="`/campaigns/${campaign.id}`">
+                      <v-btn class="info" :to="`/campaigns/${campaign.address}`">
                         <v-icon left light>arrow_forward</v-icon>
                         View Campaign
                       </v-btn>
@@ -45,19 +45,10 @@
 </template>
 
 <script>
-import factory from '../ethereum/factory'
 export default {
-  async asyncData () {
-    let campaigns = await factory.methods.getDeployedCampaigns().call()
-    campaigns = campaigns.length
-      ? campaigns.map(address => {
-        return {
-          id: address
-        }
-      })
-      : {}
-    return {
-      campaigns
+  computed: {
+    campaigns () {
+      return this.$store.getters.loadedCampaigns
     }
   }
 }

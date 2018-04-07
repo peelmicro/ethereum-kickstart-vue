@@ -31,16 +31,11 @@
 </template>
 
 <script>
-import Campaign from '../ethereum/campaign'
-import web3 from '../ethereum/web3'
 export default {
   props: ['address'],
   data () {
     return {
-      value: '',
-      errorMessage: '',
-      loading: false,
-      error: false
+      value: ''
     }
   },
   computed: {
@@ -48,6 +43,15 @@ export default {
       return (
         this.value !== ''
       )
+    },
+    errorMessage () {
+      return this.$store.getters.errorMessage
+    },
+    loading () {
+      return this.$store.getters.loading
+    },
+    error () {
+      return this.$store.getters.error
     }
   },
   methods: {
@@ -55,26 +59,11 @@ export default {
       if (!this.formIsValid) {
         return
       }
-      this.errorMessage = ''
-      this.error = false
-      this.loading = true
-      try {
-        const campaign = Campaign(this.address)
-        const accounts = await web3.eth.getAccounts() // From Metamask
-
-        await campaign.methods
-          .contribute()
-          .send({
-            from: accounts[0], // First Account
-            value: web3.utils.toWei(this.value, 'ether')
-          })
-        // this.$router.replace(`/campaigns/${this.address}`) 02/04/2018 does not work
-        this.$router.go({path: `/campaigns/${this.address}`, force: true})
-      } catch (err) {
-        this.errorMessage = err.message.split('\n', 1).join('')
-        this.error = true
-      }
-      this.loading = false
+      await this.$store.dispatch('contribute', {
+        address: this.address,
+        value: this.value
+      })
+      this.value = ''
     }
   }
 }
