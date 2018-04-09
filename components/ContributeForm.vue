@@ -44,14 +44,24 @@ export default {
         this.value !== ''
       )
     },
-    errorMessage () {
-      return this.$store.getters.errorMessage
+    errorMessage: {
+      get () {
+        return this.$store.getters.errorMessage
+      },
+      set (newValue) {
+        this.$store.commit('setErrorMessage', newValue)
+      }
     },
     loading () {
       return this.$store.getters.loading
     },
-    error () {
-      return this.$store.getters.error
+    error: {
+      get () {
+        return this.$store.getters.error
+      },
+      set (newValue) {
+        this.$store.commit('setError', newValue)
+      }
     }
   },
   methods: {

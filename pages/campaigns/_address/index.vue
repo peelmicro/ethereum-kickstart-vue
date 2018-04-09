@@ -8,6 +8,7 @@
     <v-layout row>
       <v-flex xs12 md7>
         <v-layout 
+          row
           v-for="item in items"
           :key="item.id"     
           class="mb-2"      
@@ -26,11 +27,23 @@
         </v-layout>
       </v-flex>   
       <v-flex ml-2 xs12 md5>
-        <v-card>
-          <v-card-title primary-title>
-            <ContributeForm :address="address"></ContributeForm>  
-          </v-card-title>
-        </v-card>     
+        <v-layout row>
+          <v-flex xs12>
+            <v-card>
+              <v-card-title primary-title>
+                <ContributeForm :address="address" ></ContributeForm>  
+              </v-card-title>
+            </v-card>     
+          </v-flex>
+        </v-layout>
+        <!-- <v-layout row align-end justify-end> -->
+        <v-layout row justify-end>
+          <v-btn 
+            class="primary" 
+            :to="`/campaigns/${this.address}/requests/`"
+            :disabled="loading"
+          >View Requests</v-btn> 
+        </v-layout>        
       </v-flex>         
     </v-layout>
   </v-container>
@@ -85,6 +98,25 @@ export default {
         ]
       }
       return items
+    },
+    errorMessage: {
+      get () {
+        return this.$store.getters.errorMessage
+      },
+      set (newValue) {
+        this.$store.commit('setErrorMessage', newValue)
+      }
+    },
+    loading () {
+      return this.$store.getters.loading
+    },
+    error: {
+      get () {
+        return this.$store.getters.error
+      },
+      set (newValue) {
+        this.$store.commit('setError', newValue)
+      }
     }
   },
   components: {
@@ -94,7 +126,7 @@ export default {
     this.$store.commit('setError', false)
     this.$store.commit('setErrorMessage', '')
     var currentCampaign = this.$store.getters.loadedCampaign(this.address)
-    if (currentCampaign === undefined && currentCampaign.manager === undefined && this.address !== null) {
+    if ((currentCampaign === undefined || currentCampaign.manager === undefined) && this.address !== null) {
       await this.$store.dispatch('updateCampaign', this.address)
     }
   }

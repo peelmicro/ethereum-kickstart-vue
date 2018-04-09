@@ -1,26 +1,40 @@
 <template>
   <v-container>
+    <nuxt-link :to="`/campaigns/${this.address}/requests`">Back</nuxt-link>
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
-        <h2>Create a Campaing!</h2>
+        <h2>Create a Request</h2>
       </v-flex>
     </v-layout>
     <v-layout row>
       <v-flex xs12>
-        <form @submit.prevent="onCreateCampaign">
+        <form @submit.prevent="onCreateRequest">
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-text-field
-                name="minimumContribution"
-                label="minimum contribution"
-                id="minimumContribution"
-                v-model="minimumContribution"
-                suffix="wei"
+                name="description"
+                label="description"
+                id="description"
+                v-model="description"
                 required
               ></v-text-field>
+              <v-text-field
+                name="value"
+                label="Amount in Ether"
+                id="value"
+                v-model="value"
+                suffix="Ether"
+                required
+              ></v-text-field>
+              <v-text-field
+                name="recipient"
+                label="Recipient"
+                id="recipient"
+                v-model="recipient"
+                required
+              ></v-text-field>                            
             </v-flex>
           </v-layout>
-                
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>               
               <v-btn 
@@ -28,7 +42,7 @@
                 :disabled="!formIsValid"
                 :loading="loading"
                 type="submit"
-              >Create Campaign</v-btn>
+              >Create!</v-btn>
             </v-flex>
           </v-layout>
         </form>
@@ -48,13 +62,16 @@
 export default {
   data () {
     return {
-      minimumContribution: ''
+      address: '',
+      value: '',
+      description: '',
+      recipient: ''
     }
   },
   computed: {
     formIsValid () {
       return (
-        this.minimumContribution !== ''
+        this.value !== '' && this.description !== '' && this.recipient !== ''
       )
     },
     errorMessage: {
@@ -78,21 +95,28 @@ export default {
     }
   },
   methods: {
-    async onCreateCampaign () {
+    async onCreateRequest () {
       if (!this.formIsValid) {
         return
       }
-      await this.$store.dispatch('createCampaign', {
-        minimumContribution: this.minimumContribution
+      if (this.address === '') {
+        this.address = this.$route.params.address
+      }
+      await this.$store.dispatch('createRequest', {
+        address: this.address,
+        value: this.value,
+        description: this.description,
+        recipient: this.recipient
       })
       if (!this.error) {
-        this.$router.push('/')
+        this.$router.push(`/campaigns/${this.address}/requests`)
       }
     }
   },
   mounted () {
     this.$store.commit('setError', false)
     this.$store.commit('setErrorMessage', '')
+    this.address = this.$route.params.address
   }
 }
 </script>

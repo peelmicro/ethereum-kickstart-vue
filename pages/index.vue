@@ -23,7 +23,10 @@
                       </div>
                     </v-card-title>
                     <v-card-actions>
-                      <v-btn class="info" :to="`/campaigns/${campaign.address}`">
+                      <v-btn 
+                        class="info" 
+                        :to="`/campaigns/${campaign.address}`" 
+                        :disabled="loading">
                         <v-icon left light>arrow_forward</v-icon>
                         View Campaign
                       </v-btn>
@@ -49,6 +52,9 @@ export default {
   computed: {
     campaigns () {
       return this.$store.getters.loadedCampaigns
+    },
+    loading () {
+      return this.$store.getters.loading
     }
   }
 }
