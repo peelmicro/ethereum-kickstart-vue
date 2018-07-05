@@ -8,6 +8,10 @@
 
 $ npm install # Or yarn install
 
+# build Nuxt
+
+$ npm run build
+
 # execute it
 
 $ npm run start
